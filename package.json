@@ -9,17 +9,13 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onView:vfmtoolkit.fileExplorer",
-    "onView:vfmtoolkit.customUIView"
-  ],
   "main": "./out/extension.js",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id": "vfmtoolkit",
-          "title": "VFMToolkit",
+          "title": "VFM Toolkit",
           "icon": "$(tools)"
         }
       ]
@@ -28,16 +24,37 @@
       "vfmtoolkit": [
         {
           "id": "vfmtoolkit.fileExplorer",
-          "name": "File Explorer",
+          "name": "Device logs for VFM",
           "icon": "resources/icon.svg"
-        },
-        {
-          "id": "vfmtoolkit.customUIView",
-          "name": "连接设备",
-          "icon": "$(tools)"
         }
       ]
-    }
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "vfmtoolkit.pullVfmLogs",
+          "when": "view == vfmtoolkit.fileExplorer",
+          "group": "navigation"
+        },{
+          "command": "vfmtoolkit.showInputBox",
+          "when": "view == vfmtoolkit.fileExplorer",
+          "group": "navigation"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "vfmtoolkit.pullVfmLogs",
+        "title": "拉取VFM日志文件",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "vfmtoolkit.showInputBox",
+        "title": "连接设备",
+        "category": "VFM Toolkit",
+        "icon": "$(plug)"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -48,14 +65,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.100.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.100.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "typescript": "^5.8.3",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
   }
 }

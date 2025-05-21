@@ -4,6 +4,10 @@ import * as fs from 'fs';
 
 export class FileExplorer implements vscode.TreeDataProvider<FileItem> {
   public static readonly CUSTOM_UI_VIEW_ID = 'VFMTOOLKIT_CUSTOM_UI_VIEW'; // Special identifier for the custom view
+  
+  // 添加事件发射器用于刷新视图
+  public _onDidChangeTreeData: vscode.EventEmitter<FileItem | undefined | null | void> = new vscode.EventEmitter<FileItem | undefined | null | void>();
+  public readonly onDidChangeTreeData: vscode.Event<FileItem | undefined | null | void> = this._onDidChangeTreeData.event;
 
   constructor(private viewIdOrRootPath: string) {}
 
@@ -20,14 +24,7 @@ export class FileExplorer implements vscode.TreeDataProvider<FileItem> {
       }
 
       // Create items that trigger commands
-      const inputBoxItem = new FileItem(
-        'Display Input Box',
-        'vfmtoolkit-input-box-trigger', // Unique ID, not a file path
-        vscode.TreeItemCollapsibleState.None,
-        { command: 'vfmtoolkit.showInputBox', title: 'Show Input Box' }
-      );
-      // inputBoxItem.iconPath = new vscode.ThemeIcon('edit'); // Optional: specific icon
-
+      // Create items that trigger commands
       const buttonItem = new FileItem(
         'Display Status Bar Button',
         'vfmtoolkit-button-trigger', // Unique ID, not a file path
@@ -35,8 +32,17 @@ export class FileExplorer implements vscode.TreeDataProvider<FileItem> {
         { command: 'vfmtoolkit.showStatusBarButton', title: 'Show Status Bar Button' }
       );
       // buttonItem.iconPath = new vscode.ThemeIcon('check'); // Optional: specific icon
+      
+      const pullVfmLogsItem = new FileItem(
+        '拉取VFM日志文件',
+        'vfmtoolkit-pull-vfm-logs-trigger', // Unique ID, not a file path
+        vscode.TreeItemCollapsibleState.None,
+        { command: 'vfmtoolkit.pullVfmLogs', title: '从Android设备拉取VFM日志文件' }
+      );
+      pullVfmLogsItem.iconPath = new vscode.ThemeIcon('cloud-download');
 
-      return Promise.resolve([inputBoxItem, buttonItem]);
+
+      return Promise.resolve([buttonItem, pullVfmLogsItem]);
     } else {
       // This is for the standard file explorer view
       const rootPathForExplorer = this.viewIdOrRootPath;
