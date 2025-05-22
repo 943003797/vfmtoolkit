@@ -2,7 +2,7 @@
   "name": "vfmtoolkit",
   "displayName": "vfmtoolkit",
   "description": "As the name suggests, a vfm debug toolkit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "kinson-li",
   "icon": "resources/icon.png",
   "repository": {
