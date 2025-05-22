@@ -3,6 +3,10 @@
   "displayName": "vfmtoolkit",
   "description": "As the name suggests, a vfm debug toolkit",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/vfmtoolkit.git"
+  },
   "engines": {
     "vscode": "^1.100.2"
   },
